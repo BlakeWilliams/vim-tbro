@@ -21,7 +21,7 @@ to call run specs.
 
 For a more basic example, you could map <Leader>R to run rspec by calling
 `map <Leader>R :Tbro rspec<cr>` and Tbro will send the command `rspec` to your
-pane each time you hit <Leader>R.
+pane each time you hit `<Leader>R`.
 
 ## Installation
 
