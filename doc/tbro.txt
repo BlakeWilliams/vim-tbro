@@ -1,0 +1,12 @@
+*tbro.txt* tbro - vim's bro tmux
+
+Author: Blake Williams
+License: MIT
+Repo: http://github.com/BlakeWilliams/vim-tbro
+
+COMMANDS                                                              *tbro*
+
+:Tbro [args]     Sends command to pane specified by g:tbro_pane
+:TbroRedo        Re-sends last command sent to pane specified by g:tbro_pane
+
+vim:tw=78:et:ft=help:norl:
