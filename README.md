@@ -14,11 +14,11 @@ with `:TbroPane`!).
 
 You can also run the last command with `TbroRedo`.
 
-This plugin is designed to be very minimal and comes with no mappings. Its
-original purpose was to be used with [vim-rspec](vim-rspec) and to have custom 
-maps calling `Tbro` with predefined commands. To use Tbro with vim-rspec, you
-can call `let g:rspec_command="Tbro rspec {spec}"` and vim-rspec will use Tbro
-to call run specs.
+tbro was designed to be very minimal. Its original purpose was to be
+used with [vim-rspec](vim-rspec) and to have custom maps calling `Tbro` with
+predefined commands or to be used with other plugins. To use Tbro with
+vim-rspec, you can call `let g:rspec_command="Tbro rspec {spec}"` and
+vim-rspec will use Tbro to call run spec.
 
 ## Mapping
 
