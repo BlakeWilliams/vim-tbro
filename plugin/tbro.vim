@@ -11,7 +11,12 @@ endif
 
 function! tbro#send(command, ...) abort
   let g:tbro_last_command = a:command
-  let command = shellescape(a:command)."\r"
+
+  let command = substitute(a:command, "'", "'\\\\''", 'g')
+
+  if match(command, "\n$") == -1
+    let command = command."\r"
+  end
 
   if a:0 == 1
     let pane_id = a:1
@@ -19,10 +24,11 @@ function! tbro#send(command, ...) abort
     let pane_id = g:tbro_pane
   end
 
-  let output = system('tmux send-keys -t '.pane_id.' ""'.command)
+  call system("tmux set-buffer '".command."'")
+  let output = system("tmux paste-buffer -d -t '".pane_id."'")
 
   if v:shell_error
-    echohl WarningMsg | echo output[0:-2]
+    echohl WarningMsg | echo output[0:-2] | echohl None
   endif
 endfunction
 
@@ -30,17 +36,20 @@ function! tbro#redo()
   call tbro#send(g:tbro_last_command)
 endfunction
 
-function! tbro#set_pane(pane_id)
-  let pane_string = split(a:pane_id, ':')
-  let g:tbro_pane = pane_string[0]
+function! tbro#set_pane(pane_string)
+  let g:tbro_pane = a:pane_string
 endfunction
 
 function! tbro#pane_complete(...)
-  return system('tmux list-panes -F "#P:#{pane_current_command}"')
+  return system('tmux list-panes -F "#S:#I.#P"')
 endfunction
 
 command! -nargs=1 Tbro call tbro#send(<q-args>)
 command! -nargs=1 -complete=custom,tbro#pane_complete TbroPane
       \ call tbro#set_pane('<args>')
-
 command! TbroRedo call tbro#redo()
+
+if !exists("g:tbro_skip_maps")
+  vmap <silent> <Leader>t "ty :call tbro#send(@t)<cr>
+  nmap <silent> <Leader>t :call tbro#send(getline('.'))<cr>
+endif
