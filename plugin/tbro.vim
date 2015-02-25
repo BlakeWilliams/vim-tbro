@@ -46,11 +46,11 @@ function! tbro#pane_complete(...)
 endfunction
 
 function! tbro#run_line()
-  call tbro#send(getline('.'))<cr>
+  call tbro#send(getline('.'))
 endfunction
 
 function! tbro#run_selection()
-  call tbro#send(s:get_visual_selection())<cr>
+  call tbro#send(s:get_visual_selection())
 endfunction
 
 command! -nargs=1 -complete=shellcmd Tbro call tbro#send(<q-args>)
