@@ -25,12 +25,10 @@ commands, but prefer :Tbro, :TbroRedo, and :TbroPane when available.
 * tbro#set_pane(pane_string)
   Sets the g:tbro_pane variable. Mostly for autocomplete 
 
-SHORTCUTS                                                   *tbro-shortcuts*
+* tbro#run_line()
+  Runs the line the cursor is currently on in the target pane.
 
-If you don't want tbro to make maps for you, you can set g:tbro_skip_maps to 1
-to skip all mappings.
-
-* <Leader>t
-  Sends selection, or current line to target pane.
+* tbro#run_selection()
+  Runs the current selection in the target pane.
 
 vim:tw=78:et:ft=help:norl:
