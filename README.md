@@ -32,13 +32,16 @@ target session, 1 is the target window, and 2 is the target pane. You can also
 omit session and specify just the pane and window, or omit session and window and
 specify only the pane.
 
-Tbro comes with 1 default map, `<Leader>t` which sends the current line, or
-currently selected lines to the target pane. You can opt out of these by setting
-`let g:tbro_skip_maps = 1`.
+Tbro comes with no mappings by default, but here's what I use in my own .vimrc.
+
+```vim
+vmap <silent> <Leader>t :call tbro#run_selection()<cr>
+nmap <silent> <Leader>t :call tbro#run_line()<cr>
+```
 
 ## Installation
 
-You really should be using [Vundle](https://github.com/gmarik/Vundle.vim). Add
+You should probably be using [Vundle](https://github.com/gmarik/Vundle.vim). Add
 the following to your `~/.vimrc` file, or wherever you keep your bundles.
 
 ```vim

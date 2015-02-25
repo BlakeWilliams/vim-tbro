@@ -41,15 +41,28 @@ function! tbro#set_pane(pane_string)
 endfunction
 
 function! tbro#pane_complete(...)
+  call system('tmux display-panes')
   return system('tmux list-panes -F "#S:#I.#P"')
 endfunction
 
-command! -nargs=1 Tbro call tbro#send(<q-args>)
+function! tbro#run_line()
+  call tbro#send(getline('.'))<cr>
+endfunction
+
+function! tbro#run_selection()
+  call tbro#send(s:get_visual_selection())<cr>
+endfunction
+
+command! -nargs=1 -complete=shellcmd Tbro call tbro#send(<q-args>)
 command! -nargs=1 -complete=custom,tbro#pane_complete TbroPane
       \ call tbro#set_pane('<args>')
 command! TbroRedo call tbro#redo()
 
-if !exists("g:tbro_skip_maps")
-  vmap <silent> <Leader>t "ty :call tbro#send(@t)<cr>
-  nmap <silent> <Leader>t :call tbro#send(getline('.'))<cr>
-endif
+function! s:get_visual_selection()
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+endfunction
