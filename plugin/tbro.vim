@@ -49,7 +49,7 @@ function! tbro#run_line()
   call tbro#send(getline('.'))
 endfunction
 
-function! tbro#run_selection()
+function! tbro#run_selection() range
   call tbro#send(s:get_visual_selection())
 endfunction
 
