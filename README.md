@@ -28,27 +28,31 @@ For more specific usage, run `:help tbro` in vim.
 
 ## Mapping
 
-This plugin is designed to call common shell commands from vim via custom maps.
-Tbro has the `tbro#send` function which takes a command and an optional pane
-string.
+This plugin is designed to work with tmux by setting a target pane and
+repeatedly sending text to it in whatever way fits your workflow.
 
-The pane string can be an index in the current window, or even a full
-string matching the `tmux send-keys` format of `session:1.2`. `session` is the
-target session, 1 is the target window, and 2 is the target pane. You can also
-omit session and specify just the pane and window, or omit session and window and
-specify only the pane.
+Instead of providing default mappings, here's some ideas on how you can use tbro
+to build your own mappings.
 
-Tbro comes with no mappings by default, but here's what I use in my own .vimrc.
-
-```vim
+```
+" Send current line, or selection to target pane
 vmap <silent> <Leader>t :call tbro#run_selection()<cr>
 nmap <silent> <Leader>t :call tbro#run_line()<cr>
+
+" Send arbitrary commands to tbro quickly
+nnoremap ! :Tbro 
+
+" Resend the last command
+nnoremap !! :TbroRedo<cr>
+
+" Use tbro with vim-rspec
+let g:rspec_command = "Tbro rspec {spec}"
 ```
 
 ## Installation
 
-You should probably be using [Vundle](https://github.com/gmarik/Vundle.vim). Add
-the following to your `~/.vimrc` file, or wherever you keep your bundles.
+You should probably be using [vim-plug](https://github.com/junegunn/vim-plug).
+Add the following to your `~/.vimrc` file, or wherever you keep your bundles.
 
 ```vim
 Plugin 'BlakeWilliams/vim-tbro'
