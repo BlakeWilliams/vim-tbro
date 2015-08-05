@@ -6,11 +6,15 @@ seem to do a lot more than what I wanted to do. All tbro does is send your
 command to the pane specified by `g:tbro_pane`. That's it.
 
 ## Usage
+
 In vim you can call `Tbro command` to send "command" to the pane specified by
 `g:tbro_pane`. Use `ctrl+a q` (or whatever your tmux prefix is) to display your
 panes id's. The default pane is pane 1. If you want to target a different pane,
 just set `let g:tbro_pane = 2` or call `:TbroPane` (be sure to use tab complete
 with `:TbroPane`!).
+
+Tbro provides a way to send raw keys to a pane using the `TbroKeys`. For
+example, you can send control+c by calling `TbroKeys C-c`.
 
 You can also run the last command with `TbroRedo`.
 
@@ -19,6 +23,8 @@ used with [vim-rspec](vim-rspec) and to have custom maps calling `Tbro` with
 predefined commands or to be used with other plugins. To use Tbro with
 vim-rspec, you can call `let g:rspec_command="Tbro rspec {spec}"` and
 vim-rspec will use Tbro to call run spec.
+
+For more specific usage, run `:help tbro` in vim.
 
 ## Mapping
 

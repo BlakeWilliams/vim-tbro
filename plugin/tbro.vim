@@ -32,6 +32,20 @@ function! tbro#send(command, ...) abort
   endif
 endfunction
 
+function! tbro#send_keys(command, ...)
+  if a:0 == 1
+    let pane_id = a:1
+  else
+    let pane_id = g:tbro_pane
+  end
+
+  call system("tmux send-keys -t '".pane_id."' ".a:command)
+
+  if v:shell_error
+    echohl WarningMsg | echo output[0:-2] | echohl None
+  endif
+endfunction
+
 function! tbro#redo()
   call tbro#send(g:tbro_last_command)
 endfunction
@@ -42,7 +56,7 @@ endfunction
 
 function! tbro#pane_complete(...)
   call system('tmux display-panes')
-  return system('tmux list-panes -F "#S:#I.#P"')
+  return system('tmux list-panes -F "#P"')
 endfunction
 
 function! tbro#run_line()
@@ -54,6 +68,7 @@ function! tbro#run_selection() range
 endfunction
 
 command! -nargs=1 -complete=shellcmd Tbro call tbro#send(<q-args>)
+command! -nargs=1 -complete=shellcmd TbroRaw call tbro#send_keys(<q-args>)
 command! -nargs=1 -complete=custom,tbro#pane_complete TbroPane
       \ call tbro#set_pane('<args>')
 command! TbroRedo call tbro#redo()
